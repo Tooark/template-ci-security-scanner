@@ -2,3 +2,4 @@ scan-reports/
 .cache/
 _site/
 *.log
+__pycache__/

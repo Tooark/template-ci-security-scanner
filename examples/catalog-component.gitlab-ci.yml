@@ -1,9 +1,12 @@
 # =============================================================================
-# Consuming ci-security-scanner from a self-hosted CI/CD Catalog.
+# Consuming the templates as components of a self-hosted CI/CD Catalog.
 # -----------------------------------------------------------------------------
-# Assumes the mirror project from examples/gitlab-catalog-mirror/ has published
-# at least one version. $CI_SERVER_FQDN resolves to the instance host, so this
-# snippet is portable across projects.
+# Assumes the mirror project from catalog-mirror/ has published at least one
+# version on your instance, as tooark/ci-security-scanner. $CI_SERVER_FQDN
+# resolves to the instance host, so this snippet is portable across projects.
+#
+# A component takes the bare version (1.3.0); a remote include takes the tag
+# (v1.3.0).
 # =============================================================================
 stages:
   - build
@@ -11,7 +14,7 @@ stages:
 
 include:
   # Full combo on the default branch and on tags.
-  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/full-scan@1.2.0
+  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/full-scan@1.3.0
     inputs:
       stage: security
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
@@ -23,7 +26,7 @@ include:
         - if: $CI_COMMIT_TAG
 
   # Fast feedback on merge requests: secrets and Dockerfile lint only.
-  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/secret-scan@1.2.0
+  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/secret-scan@1.3.0
     inputs:
       job_name: "security:secrets-mr"
       stage: security
@@ -32,7 +35,7 @@ include:
       rules:
         - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
-  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/dockerfile-lint@1.2.0
+  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/dockerfile-lint@1.3.0
     inputs:
       job_name: "security:lint-mr"
       stage: security
@@ -42,9 +45,10 @@ include:
         - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 
 # -----------------------------------------------------------------------------
-# Ship reports to an internal collector. Secrets belong in masked CI/CD
-# variables, never in inputs, because input values are visible in the pipeline
-# configuration.
+# Ship reports to an internal collector. Every generated job reads these, and
+# an input left blank never overrides them. Secrets belong in masked CI/CD
+# variables (Settings > CI/CD > Variables), never in inputs and never in this
+# file: add REPORT_TOKEN there.
 # -----------------------------------------------------------------------------
 variables:
   REPORT_URL: "https://security-hub.internal/api/reports"

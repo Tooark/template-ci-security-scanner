@@ -1,0 +1,19 @@
+# =============================================================================
+# The smallest useful pipeline: scan the project on every push.
+# -----------------------------------------------------------------------------
+# Copy into .gitlab-ci.yml in the project you want to scan, or add the include
+# to the one you already have.
+#
+# With no `image` input, full-scan skips the image step and runs the other
+# three: Trivy over the source tree, Betterleaks over the git history and
+# Hadolint over ./Dockerfile (a missing Dockerfile is a warning, not a failure).
+#
+# The job is called security:full-scan and runs in the `test` stage, which
+# every pipeline has unless it declares `stages:` without it. It fails when a
+# gate trips: a HIGH or CRITICAL vulnerability that has a fix, a Dockerfile
+# finding at `error` level, or any detected secret. Reports are kept as job
+# artifacts for 7 days.
+# =============================================================================
+include:
+  # Always pin a tag.
+  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/full-scan.yml"

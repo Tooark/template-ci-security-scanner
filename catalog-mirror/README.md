@@ -4,7 +4,7 @@ GitLab only lists components that live in a project on the GitLab instance
 itself, so a GitHub repository cannot be published to the catalog directly.
 This directory holds the pipeline for a small mirror project that closes that
 gap: it watches releases of
-[`Tooark/ci-security-scanner`](https://github.com/Tooark/ci-security-scanner),
+[`Tooark/template-ci-security-scanner`](https://github.com/Tooark/template-ci-security-scanner),
 copies `templates/` across when the version moves, and publishes the new
 version to the internal catalog.
 
@@ -35,7 +35,7 @@ and later. On an older instance, switch its image to
    ```bash
    git clone https://gitlab.example.com/tooark/ci-security-scanner.git
    cd ci-security-scanner
-   curl -fsSLO https://raw.githubusercontent.com/Tooark/ci-security-scanner/main/examples/gitlab-catalog-mirror/.gitlab-ci.yml
+   curl -fsSLO https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/main/catalog-mirror/.gitlab-ci.yml
    git add .gitlab-ci.yml
    git commit -m "chore: add catalog sync pipeline"
    git push
@@ -80,7 +80,7 @@ Once the first release lands, projects on the instance include it by path:
 
 ```yaml
 include:
-  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/full-scan@1.2.0
+  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/full-scan@1.3.0
     inputs:
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
       trivy_severity: "CRITICAL,HIGH"
@@ -88,6 +88,29 @@ include:
 
 `$CI_SERVER_FQDN` resolves to the instance host, so the same snippet works in
 every project without hardcoding the domain.
+
+## Moving an existing mirror to this repository
+
+Until 1.2.0 the templates were released from a repository called
+`Tooark/ci-security-scanner`. It has since been renamed
+[`Tooark/action-security-scanner`](https://github.com/Tooark/action-security-scanner)
+and is the GitHub Action only. A mirror set up back then still has
+`UPSTREAM_REPO: "Tooark/ci-security-scanner"`; GitHub redirects that name to
+the renamed repository, so its `sync` job finds a release without `templates/`
+and fails with `upstream release is missing templates`.
+
+Point it here instead. Either edit `UPSTREAM_REPO` in the mirror's
+`.gitlab-ci.yml`:
+
+```yaml
+variables:
+  UPSTREAM_REPO: "Tooark/template-ci-security-scanner"
+```
+
+or leave the file alone and add `UPSTREAM_REPO` with that value under
+_Settings > CI/CD > Variables_ — a project variable wins over the one in the
+file. Nothing else changes: the versions already published stay as they are,
+and the next `sync` picks up from the newest release here.
 
 ## Version mapping
 

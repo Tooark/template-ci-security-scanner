@@ -1,5 +1,5 @@
 name: ✨ Feature request
-description: Suggest an improvement to the templates, the Action or the tooling.
+description: Suggest an improvement to the templates, the catalog mirror or the tooling.
 title: "[feat] "
 labels: ["enhancement", "triage"]
 body:
@@ -15,7 +15,7 @@ body:
       options:
         - label: I have searched existing issues.
           required: true
-        - label: This cannot already be done by overriding the generated job or setting the matching environment variable.
+        - label: This cannot already be done by redeclaring the generated job or setting the matching CI/CD variable.
           required: true
 
   - type: dropdown
@@ -23,12 +23,11 @@ body:
     attributes:
       label: Which area?
       options:
-        - New input on an existing scan
-        - New scan command
-        - GitLab templates only
-        - GitHub Action only
-        - Runner script (src/run-scanner.sh)
-        - Validation scripts / CI
+        - New input on an existing template
+        - New template
+        - The generated job (cache, artifacts, rules, variables)
+        - Catalog mirror (catalog-mirror/)
+        - Validation scripts / tests / CI
         - Documentation (README, docs/, examples/)
         - Release and versioning
     validations:
@@ -48,21 +47,21 @@ body:
       label: Proposed solution
       description: |
         For a new input, name the environment variable the scanner image already reads —
-        the component forwards variables, it does not implement scanning behaviour.
+        the templates forward variables, they do not implement scanning behaviour.
     validations:
       required: true
 
   - type: dropdown
     id: parity
     attributes:
-      label: Does it apply to both platforms?
+      label: Does it apply to the GitHub Action too?
       description: |
-        Input names, defaults and precedence are kept identical across GitLab and GitHub.
-        A change that lands on one side only needs a reason.
+        Input names are kept identical to Tooark/action-security-scanner, in snake_case here
+        and kebab-case there. A new input usually belongs in both.
       options:
-        - Both GitLab and GitHub
-        - GitHub only — and here is why
-        - GitLab only — and here is why
+        - Yes — I will open, or have opened, the matching issue there
+        - No — it only makes sense on GitLab CI
+        - Not sure
     validations:
       required: true
 

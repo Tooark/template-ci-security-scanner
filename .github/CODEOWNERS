@@ -1,5 +1,5 @@
 # ==============================================================================
-# Tooark ci-security-scanner — CODEOWNERS
+# Tooark template-ci-security-scanner — CODEOWNERS
 # ==============================================================================
 # GitHub uses this file to auto-request reviews from the right owner.
 # Rules are matched top-to-bottom; the LAST matching rule wins per file.
@@ -25,14 +25,16 @@
 
 # The published product: these run inside other people's pipelines, so a
 # change here reaches every consuming project on the next tag move.
-/action.yml                         @paulosfjunior
-/src/                               @paulosfjunior
 /templates/                         @paulosfjunior
 
-# Single source of truth for the pinned scanner image, and the checks that
-# keep the two platforms from drifting apart.
+# The pipeline people copy into a project that holds a push token.
+/catalog-mirror/                    @paulosfjunior
+
+# Single source of truth for the pinned scanner image, and the checks and
+# tests that keep the templates and their documentation from drifting apart.
 /VERSION                            @paulosfjunior
 /scripts/                           @paulosfjunior
+/tests/                             @paulosfjunior
 
 # Support boundaries users rely on when adopting the component.
 /SUPPORTED-INTEGRATIONS.md          @paulosfjunior

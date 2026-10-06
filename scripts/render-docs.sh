@@ -15,8 +15,8 @@
 #                     1.10.0), the form Tooark/base-images names its releases
 #
 # A placeholder with no value fails the render instead of shipping "{{...}}" to
-# readers. Only UPPER_SNAKE names count, so the GitHub Actions expressions the
-# guide quotes -- ${{ inputs.image }} -- are left alone.
+# readers. Only UPPER_SNAKE names count, so anything else in double braces is
+# left alone.
 #
 # Pages publishes the output (.github/workflows/pages.yml) and check-sync.sh
 # checks it. Opening docs/index.html directly shows the raw placeholders.

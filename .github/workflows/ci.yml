@@ -42,14 +42,31 @@ jobs:
           sys.exit(1 if failed else 0)
           PY
 
-      - name: Validate GitLab component templates
+      - name: Validate the component templates
         run: python3 scripts/validate-templates.py
 
-      - name: Check version pinning and input parity
+      - name: Check version pinning, input wiring and docs
         run: bash scripts/check-sync.sh
 
+      - name: Check the examples against the templates
+        run: python3 scripts/check-examples.py
+
+      # No GitLab and no scanner image involved: each template is rendered and
+      # its job script run against a stand-in ark-tools that records what it
+      # was called with.
+      - name: Test the jobs the templates generate
+        run: python3 tests/templates.test.py
+
       - name: ShellCheck
-        run: shellcheck -s bash src/run-scanner.sh scripts/check-sync.sh scripts/render-docs.sh
+        run: shellcheck -s bash scripts/*.sh
+
+      # The script blocks inside the templates are shell too, and they run in
+      # every consuming pipeline. sh, not bash: nothing in them may depend on
+      # the shell a runner happens to pick.
+      - name: ShellCheck the job scripts
+        run: |
+          python3 tests/templates.test.py --dump "$RUNNER_TEMP/job-scripts"
+          shellcheck -s sh "$RUNNER_TEMP"/job-scripts/*.sh
 
       # Pinned by digest: a third-party image runs with this job's context, and
       # a mutable tag would let it change without a commit here. This is
@@ -69,15 +86,17 @@ jobs:
           # Betterleaks walks the git history; a shallow clone hides most of it.
           fetch-depth: 0
 
-      # Dogfooding: the action in this repo scans this repo.
-      - name: Scan this repository
-        uses: ./
+      # This repository lives on GitHub, so it is scanned by the GitHub front
+      # end of the same scanner: the sister Action, which runs the same image
+      # and the same ark-tools commands as the templates here.
+      - name: Scan this repository for secrets
+        uses: Tooark/action-security-scanner@v1.2.0
         with:
           command: secret-scan
           artifact-name: self-scan-reports
 
       - name: Scan this repository for vulnerable dependencies
-        uses: ./
+        uses: Tooark/action-security-scanner@v1.2.0
         with:
           command: filesystem-scan
           trivy-severity: CRITICAL,HIGH
