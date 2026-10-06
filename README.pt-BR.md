@@ -120,8 +120,8 @@ include:
 Pipelines completos, prontos para copiar, ficam em
 [`examples/`](https://github.com/Tooark/template-security-scanner/tree/main/examples):
 
-| Exemplo                                                                                                                                        | O que mostra                                                                         |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Exemplo                                                                                                                                     | O que mostra                                                                         |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | [`quick-start.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/quick-start.gitlab-ci.yml)             | O include de uma linha acima                                                         |
 | [`remote-include.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/remote-include.gitlab-ci.yml)       | Build, scan completo da imagem enviada, um job de merge request e um override de job |
 | [`catalog-component.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/catalog-component.gitlab-ci.yml) | Os mesmos scans como componentes de catálogo, com rules e tags de runner             |

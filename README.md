@@ -117,8 +117,8 @@ include:
 Complete pipelines, ready to copy, live in
 [`examples/`](https://github.com/Tooark/template-security-scanner/tree/main/examples):
 
-| Example                                                                                                                                        | What it shows                                                             |
-| ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| Example                                                                                                                                     | What it shows                                                             |
+| ------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
 | [`quick-start.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/quick-start.gitlab-ci.yml)             | The one-line include above                                                |
 | [`remote-include.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/remote-include.gitlab-ci.yml)       | Build, full scan of the pushed image, a merge-request job, a job override |
 | [`catalog-component.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/catalog-component.gitlab-ci.yml) | The same scans as catalog components, with rules and runner tags          |
