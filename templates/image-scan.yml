@@ -9,7 +9,7 @@
 # Private registries: set TRIVY_USERNAME / TRIVY_PASSWORD as masked CI/CD
 # variables; Trivy reads them natively.
 #
-# Docs: https://github.com/Tooark/template-ci-security-scanner
+# Docs: https://github.com/Tooark/template-security-scanner
 # =============================================================================
 spec:
   inputs:

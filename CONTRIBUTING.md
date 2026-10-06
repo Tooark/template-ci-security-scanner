@@ -1,7 +1,7 @@
-# Contributing to template-ci-security-scanner
+# Contributing to template-security-scanner
 
 First off, thank you for considering contributing to
-**Tooark template-ci-security-scanner**! 🎉
+**Tooark template-security-scanner**! 🎉
 
 This repository publishes one thing: the GitLab CI/CD templates that run the
 Tooark `security-scanner` image. What they promise a consumer is that every
@@ -14,7 +14,7 @@ The two share input names on purpose, so a change to an input here is usually
 worth an issue there.
 
 If you are new to CI pipelines, read the
-[onboarding guide](https://tooark.com/template-ci-security-scanner/) first — it
+[onboarding guide](https://tooark.com/template-security-scanner/) first — it
 explains what each file does and why.
 
 ## Table of contents

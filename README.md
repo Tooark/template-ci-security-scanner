@@ -11,7 +11,7 @@
   headings: it turns into a double hyphen on GitHub and a single one on GitLab.
 -->
 <div align="left">
-  <img src="https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/main/media/banner-ci-security-scanner.png" alt="CI Security Scanner" width="100%" />
+  <img src="https://raw.githubusercontent.com/Tooark/template-security-scanner/main/media/banner-ci-security-scanner.png" alt="CI Security Scanner" width="100%" />
 </div>
 
 # CI Security Scanner — GitLab CI/CD templates
@@ -34,12 +34,12 @@ Catalog.
 > `trivy-severity` there.
 
 New to CI pipelines? The
-[onboarding guide](https://tooark.com/template-ci-security-scanner/) walks
+[onboarding guide](https://tooark.com/template-security-scanner/) walks
 through every file in this repository and the reasoning behind each decision,
 written for readers who know software development but not CI. Source in
-[`docs/`](https://github.com/Tooark/template-ci-security-scanner/tree/main/docs).
+[`docs/`](https://github.com/Tooark/template-security-scanner/tree/main/docs).
 
-🌍 **Languages:** ![USA Flag](https://flagcdn.com/w20/us.png) **English (this file)** · [![Brazil Flag](https://flagcdn.com/w20/br.png) Português](https://github.com/Tooark/template-ci-security-scanner/blob/main/README.pt-BR.md)
+🌍 **Languages:** ![USA Flag](https://flagcdn.com/w20/us.png) **English (this file)** · [![Brazil Flag](https://flagcdn.com/w20/br.png) Português](https://github.com/Tooark/template-security-scanner/blob/main/README.pt-BR.md)
 
 ---
 
@@ -80,7 +80,7 @@ Works on gitlab.com and on any instance that can reach
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/full-scan.yml"
 ```
 
 That one include adds a `security:full-scan` job to the `test` stage. With no
@@ -92,7 +92,7 @@ To include the container image the pipeline has built:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/full-scan.yml"
     inputs:
       stage: test
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
@@ -103,7 +103,7 @@ include:
 ### CI/CD Catalog
 
 The catalog only lists components hosted on the GitLab instance itself. Once
-the [mirror project](https://github.com/Tooark/template-ci-security-scanner/tree/main/catalog-mirror)
+the [mirror project](https://github.com/Tooark/template-security-scanner/tree/main/catalog-mirror)
 has published a version to yours:
 
 ```yaml
@@ -115,13 +115,13 @@ include:
 ```
 
 Complete pipelines, ready to copy, live in
-[`examples/`](https://github.com/Tooark/template-ci-security-scanner/tree/main/examples):
+[`examples/`](https://github.com/Tooark/template-security-scanner/tree/main/examples):
 
 | Example                                                                                                                                        | What it shows                                                             |
 | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| [`quick-start.gitlab-ci.yml`](https://github.com/Tooark/template-ci-security-scanner/blob/main/examples/quick-start.gitlab-ci.yml)             | The one-line include above                                                |
-| [`remote-include.gitlab-ci.yml`](https://github.com/Tooark/template-ci-security-scanner/blob/main/examples/remote-include.gitlab-ci.yml)       | Build, full scan of the pushed image, a merge-request job, a job override |
-| [`catalog-component.gitlab-ci.yml`](https://github.com/Tooark/template-ci-security-scanner/blob/main/examples/catalog-component.gitlab-ci.yml) | The same scans as catalog components, with rules and runner tags          |
+| [`quick-start.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/quick-start.gitlab-ci.yml)             | The one-line include above                                                |
+| [`remote-include.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/remote-include.gitlab-ci.yml)       | Build, full scan of the pushed image, a merge-request job, a job override |
+| [`catalog-component.gitlab-ci.yml`](https://github.com/Tooark/template-security-scanner/blob/main/examples/catalog-component.gitlab-ci.yml) | The same scans as catalog components, with rules and runner tags          |
 
 ---
 
@@ -135,7 +135,7 @@ Complete pipelines, ready to copy, live in
 | Network     | `ghcr.io` for the scanner image, the Trivy vulnerability database (or a `trivy_server`), and `raw.githubusercontent.com` for a remote include |
 
 The full support matrix is in
-[`SUPPORTED-INTEGRATIONS.md`](https://github.com/Tooark/template-ci-security-scanner/blob/main/SUPPORTED-INTEGRATIONS.md).
+[`SUPPORTED-INTEGRATIONS.md`](https://github.com/Tooark/template-security-scanner/blob/main/SUPPORTED-INTEGRATIONS.md).
 
 ---
 
@@ -330,8 +330,8 @@ variables:
   HADOLINT_FAILURE_LEVEL: "warning"
 
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/filesystem-scan.yml"
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/filesystem-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
 ```
 
 The job runs inside the scanner image, so every CI/CD variable reaches the
@@ -372,7 +372,7 @@ by redeclaring the generated job:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/image-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/image-scan.yml"
     inputs:
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
 
@@ -389,8 +389,8 @@ other in a later job that downloads both:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
     inputs:
       job_name: "security:dockerfile-lint-worker"
       dockerfile: "$CI_PROJECT_DIR/docker/Dockerfile.worker"
@@ -401,7 +401,7 @@ include:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/secret-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/secret-scan.yml"
     inputs:
       rules:
         - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -412,7 +412,7 @@ picked up automatically — or a Betterleaks baseline:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/secret-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/secret-scan.yml"
     inputs:
       betterleaks_baseline: ".security/betterleaks-baseline.json"
 ```
@@ -422,7 +422,7 @@ warning on the pipeline:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/filesystem-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/filesystem-scan.yml"
     inputs:
       allow_failure: true
 ```
@@ -511,7 +511,7 @@ to a commit SHA is the only fully immutable reference:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/<commit-sha>/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/<commit-sha>/templates/full-scan.yml"
 ```
 
 **A remote include is fetched when the pipeline is created.** If
@@ -564,7 +564,7 @@ run `./scripts/check-sync.sh`, update the pins it flags.
 
 ### GitHub Releases
 
-Push a `v*.*.*` tag. [`.github/workflows/release.yml`](https://github.com/Tooark/template-ci-security-scanner/blob/main/.github/workflows/release.yml)
+Push a `v*.*.*` tag. [`.github/workflows/release.yml`](https://github.com/Tooark/template-security-scanner/blob/main/.github/workflows/release.yml)
 runs the checks, compares the tag against `VERSION`, creates the release with
 generated notes and moves the floating tags. A remote include can use the tag
 as soon as it exists.
@@ -573,7 +573,7 @@ as soon as it exists.
 
 The catalog only lists components hosted on the GitLab instance itself, so a
 GitHub repository cannot be published to it directly. Set up the mirror project
-described in [`catalog-mirror/`](https://github.com/Tooark/template-ci-security-scanner/tree/main/catalog-mirror):
+described in [`catalog-mirror/`](https://github.com/Tooark/template-security-scanner/tree/main/catalog-mirror):
 it polls the releases here on a schedule, copies `templates/` across when the
 version moves, and publishes to the catalog of your instance.
 
@@ -648,7 +648,7 @@ runs `actionlint`, and scans this repository with the sister GitHub Action.
 When adding an input, touch all four places or the checks will say so: the
 template's `spec:inputs`, its `variables:` block as `ARK_IN_*`, the job script
 that reads it, and the tables in both READMEs.
-[`CONTRIBUTING.md`](https://github.com/Tooark/template-ci-security-scanner/blob/main/CONTRIBUTING.md)
+[`CONTRIBUTING.md`](https://github.com/Tooark/template-security-scanner/blob/main/CONTRIBUTING.md)
 has the details.
 
 ---
@@ -665,7 +665,7 @@ has the details.
 ## 🤝 Contributing
 
 Contributions are welcome! Start with
-[CONTRIBUTING.md](https://github.com/Tooark/template-ci-security-scanner/blob/main/CONTRIBUTING.md)
+[CONTRIBUTING.md](https://github.com/Tooark/template-security-scanner/blob/main/CONTRIBUTING.md)
 — it covers what belongs here and what belongs in the scanner image, the
 development workflow, how to add an input, the commit convention and the
 release process.
@@ -678,14 +678,14 @@ Quick notes:
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/)
 - Record anything a consumer will notice in `CHANGELOG.md`, under `[Unreleased]`
 
-By participating you agree to the [Code of Conduct](https://github.com/Tooark/template-ci-security-scanner/blob/main/CODE_OF_CONDUCT.md).
+By participating you agree to the [Code of Conduct](https://github.com/Tooark/template-security-scanner/blob/main/CODE_OF_CONDUCT.md).
 
 ---
 
 ## 🆘 Help and Security
 
-- ❓ **Questions, bugs, feature ideas** — see [SUPPORT.md](https://github.com/Tooark/template-ci-security-scanner/blob/main/SUPPORT.md) for the right channel
-- 🔒 **Security vulnerabilities** — do **not** open a public issue; follow [SECURITY.md](https://github.com/Tooark/template-ci-security-scanner/blob/main/SECURITY.md)
+- ❓ **Questions, bugs, feature ideas** — see [SUPPORT.md](https://github.com/Tooark/template-security-scanner/blob/main/SUPPORT.md) for the right channel
+- 🔒 **Security vulnerabilities** — do **not** open a public issue; follow [SECURITY.md](https://github.com/Tooark/template-security-scanner/blob/main/SECURITY.md)
 - 🐳 **A problem inside the scanner itself** — Trivy, Hadolint, Betterleaks and `ark-tools` live in [`Tooark/base-images`](https://github.com/Tooark/base-images/tree/main/security-scanner)
 
 ---

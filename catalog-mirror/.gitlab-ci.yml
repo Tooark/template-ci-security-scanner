@@ -2,7 +2,7 @@
 # Mirror project: publishes the CI Security Scanner templates to a self-hosted
 # GitLab CI/CD Catalog.
 # -----------------------------------------------------------------------------
-# GitHub stays the source of truth: Tooark/template-ci-security-scanner. This
+# GitHub stays the source of truth: Tooark/template-security-scanner. This
 # project holds a copy of templates/ and republishes it whenever upstream cuts
 # a release.
 #
@@ -17,7 +17,7 @@ stages:
   - release
 
 variables:
-  UPSTREAM_REPO: "Tooark/template-ci-security-scanner"
+  UPSTREAM_REPO: "Tooark/template-security-scanner"
   UPSTREAM_API: "https://api.github.com"
   UPSTREAM_DOWNLOAD: "https://github.com"
   # Files replaced wholesale on each sync. Everything else in this project

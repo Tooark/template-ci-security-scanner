@@ -8,7 +8,7 @@
     />
     <meta
       name="description"
-      content="Guia de onboarding do template-ci-security-scanner: os templates de CI/CD do GitLab que rodam o scanner da Tooark, o que cada arquivo faz e o porque de cada decisao."
+      content="Guia de onboarding do template-security-scanner: os templates de CI/CD do GitLab que rodam o scanner da Tooark, o que cada arquivo faz e o porque de cada decisao."
     />
 
     <!-- Externo, nao inline: o site e servido com uma Content Security Policy
@@ -908,7 +908,7 @@
           </button>
           <a
             class="toggle-btn"
-            href="https://github.com/Tooark/template-ci-security-scanner"
+            href="https://github.com/Tooark/template-security-scanner"
             target="_blank"
             rel="noopener"
           >
@@ -923,12 +923,12 @@
 
         <p class="eyebrow">Onboarding · Tooark</p>
         <h1 lang="pt-BR">
-          template-ci-security-scanner<br /><span class="accent"
+          template-security-scanner<br /><span class="accent"
             >por dentro</span
           >
         </h1>
         <h1 lang="en">
-          template-ci-security-scanner<br /><span class="accent"
+          template-security-scanner<br /><span class="accent"
             >from the inside</span
           >
         </h1>
@@ -951,16 +951,16 @@
         <ul class="facts" lang="pt-BR">
           <li>
             <a
-              href="https://github.com/Tooark/template-ci-security-scanner"
+              href="https://github.com/Tooark/template-security-scanner"
               title="Repositório no GitHub"
               target="_blank"
               rel="noopener"
-              ><b>Tooark/template-ci-security-scanner</b></a
+              ><b>Tooark/template-security-scanner</b></a
             >
           </li>
           <li>
             <a
-              href="https://github.com/Tooark/template-ci-security-scanner/releases/tag/v{{COMPONENT_VERSION}}"
+              href="https://github.com/Tooark/template-security-scanner/releases/tag/v{{COMPONENT_VERSION}}"
               title="Release v{{COMPONENT_VERSION}} no GitHub"
               target="_blank"
               rel="noopener"
@@ -983,16 +983,16 @@
         <ul class="facts" lang="en">
           <li>
             <a
-              href="https://github.com/Tooark/template-ci-security-scanner"
+              href="https://github.com/Tooark/template-security-scanner"
               title="Repository on GitHub"
               target="_blank"
               rel="noopener"
-              ><b>Tooark/template-ci-security-scanner</b></a
+              ><b>Tooark/template-security-scanner</b></a
             >
           </li>
           <li>
             <a
-              href="https://github.com/Tooark/template-ci-security-scanner/releases/tag/v{{COMPONENT_VERSION}}"
+              href="https://github.com/Tooark/template-security-scanner/releases/tag/v{{COMPONENT_VERSION}}"
               title="Release v{{COMPONENT_VERSION}} on GitHub"
               target="_blank"
               rel="noopener"
@@ -2044,7 +2044,7 @@
             <h3>Include remoto</h3>
 
             <pre><code><span class="k">include:</span>
-  - <span class="k">remote:</span> "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v{{COMPONENT_VERSION}}/templates/full-scan.yml"
+  - <span class="k">remote:</span> "https://raw.githubusercontent.com/Tooark/template-security-scanner/v{{COMPONENT_VERSION}}/templates/full-scan.yml"
     <span class="k">inputs:</span>
       <span class="k">stage:</span> security
       <span class="k">image:</span> "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
@@ -2110,7 +2110,7 @@
             <h3>Remote include</h3>
 
             <pre><code><span class="k">include:</span>
-  - <span class="k">remote:</span> "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v{{COMPONENT_VERSION}}/templates/full-scan.yml"
+  - <span class="k">remote:</span> "https://raw.githubusercontent.com/Tooark/template-security-scanner/v{{COMPONENT_VERSION}}/templates/full-scan.yml"
     <span class="k">inputs:</span>
       <span class="k">stage:</span> security
       <span class="k">image:</span> "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
@@ -2660,7 +2660,7 @@ ark-tools "$@"</code></pre>
               cria na sua instância; nada aqui o executa. O job
               <code>sync</code> consulta os releases de
               <code>UPSTREAM_REPO</code>
-              (<code>Tooark/template-ci-security-scanner</code>) em um
+              (<code>Tooark/template-security-scanner</code>) em um
               agendamento semanal; quando a versão muda, copia
               <code class="path">templates/</code>, <code>README.md</code>,
               <code>LICENSE</code> e <code>VERSION</code>, faz o commit e
@@ -2700,7 +2700,7 @@ ark-tools "$@"</code></pre>
               create on your own instance; nothing here runs it. Its
               <code>sync</code> job polls the releases of
               <code>UPSTREAM_REPO</code>
-              (<code>Tooark/template-ci-security-scanner</code>) on a weekly
+              (<code>Tooark/template-security-scanner</code>) on a weekly
               schedule; when the version moves, it copies
               <code class="path">templates/</code>, <code>README.md</code>,
               <code>LICENSE</code> and <code>VERSION</code>, commits and pushes
@@ -3637,7 +3637,7 @@ shellcheck -s bash scripts/*.sh</code></pre>
             </div>
 
             <p class="closer">
-              Guia de onboarding · Tooark/template-ci-security-scanner
+              Guia de onboarding · Tooark/template-security-scanner
               v{{COMPONENT_VERSION}} · scanner {{SCANNER_VERSION}}<br />
               A referência autoritativa de cada input é o bloco
               <code>spec:inputs</code> do template correspondente.
@@ -3783,7 +3783,7 @@ shellcheck -s bash scripts/*.sh</code></pre>
             </div>
 
             <p class="closer">
-              Onboarding guide · Tooark/template-ci-security-scanner
+              Onboarding guide · Tooark/template-security-scanner
               v{{COMPONENT_VERSION}} · scanner {{SCANNER_VERSION}}<br />
               The authoritative reference for every input is the
               <code>spec:inputs</code> block of the matching template.
