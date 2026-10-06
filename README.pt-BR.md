@@ -81,7 +81,7 @@ Funciona no gitlab.com e em qualquer instância que alcance
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/full-scan.yml"
 ```
 
 Esse único include adiciona um job `security:full-scan` ao stage `test`. Sem
@@ -94,7 +94,7 @@ Para incluir a imagem que o pipeline construiu:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/full-scan.yml"
     inputs:
       stage: test
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
@@ -111,7 +111,7 @@ publicar uma versão na sua:
 
 ```yaml
 include:
-  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/full-scan@1.3.0
+  - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/full-scan@1.3.1
     inputs:
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
       trivy_severity: "CRITICAL,HIGH"
@@ -335,8 +335,8 @@ variables:
   HADOLINT_FAILURE_LEVEL: "warning"
 
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/filesystem-scan.yml"
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/filesystem-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/dockerfile-lint.yml"
 ```
 
 O job roda dentro da imagem do scanner, então toda variável de CI/CD chega
@@ -376,7 +376,7 @@ as credenciais do próprio job, redeclarando o job gerado:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/image-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/image-scan.yml"
     inputs:
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
 
@@ -393,8 +393,8 @@ sobrescrevam num job posterior que baixe ambos:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/dockerfile-lint.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/dockerfile-lint.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/dockerfile-lint.yml"
     inputs:
       job_name: "security:dockerfile-lint-worker"
       dockerfile: "$CI_PROJECT_DIR/docker/Dockerfile.worker"
@@ -405,7 +405,7 @@ include:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/secret-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/secret-scan.yml"
     inputs:
       rules:
         - if: $CI_PIPELINE_SOURCE == "merge_request_event"
@@ -416,7 +416,7 @@ include:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/secret-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/secret-scan.yml"
     inputs:
       betterleaks_baseline: ".security/betterleaks-baseline.json"
 ```
@@ -426,7 +426,7 @@ em um aviso no pipeline:
 
 ```yaml
 include:
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/filesystem-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/filesystem-scan.yml"
     inputs:
       allow_failure: true
 ```

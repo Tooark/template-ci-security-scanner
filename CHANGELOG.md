@@ -6,6 +6,28 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.3.1] - 2026-10-06
+
+The repository is renamed `Tooark/template-security-scanner`. Nothing a
+template runs changes: this release only moves the addresses that point here.
+
+### Changed
+
+- The repository is now `Tooark/template-security-scanner`; 1.3.0 was released
+  as `Tooark/template-ci-security-scanner`. The examples, both READMEs,
+  `SUPPORTED-INTEGRATIONS.md` and the default `UPSTREAM_REPO` of the catalog
+  mirror use the new name. A remote include or a catalog mirror that still
+  names the old one keeps resolving for as long as GitHub redirects it, but
+  should move:
+  - a remote include points at
+    `https://raw.githubusercontent.com/Tooark/template-security-scanner/<tag>/templates/<scan>.yml`;
+  - a catalog mirror sets `UPSTREAM_REPO` to
+    `Tooark/template-security-scanner`, in its `.gitlab-ci.yml` or as a
+    project CI/CD variable. Component paths on your instance do not change.
+- The onboarding guide moved to
+  <https://tooark.com/template-security-scanner/>. Its old address,
+  `https://tooark.com/template-ci-security-scanner/`, no longer resolves.
+
 ## [1.3.0] - 2026-10-05
 
 This repository is now the home of the GitLab CI/CD templates, and of nothing
@@ -293,7 +315,8 @@ a tag — this content first reached consumers as part of 1.1.0.
   socket mount, unredacted Betterleaks output, and Trivy's secret scanner
   writing findings into an uploaded artifact.
 
-[Unreleased]: https://github.com/Tooark/template-security-scanner/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/Tooark/template-security-scanner/compare/v1.3.1...HEAD
+[1.3.1]: https://github.com/Tooark/template-security-scanner/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/Tooark/template-security-scanner/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/Tooark/template-security-scanner/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/Tooark/template-security-scanner/releases/tag/v1.1.0
