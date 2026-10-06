@@ -6,6 +6,104 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.3.0] - 2026-10-05
+
+This repository is now the home of the GitLab CI/CD templates, and of nothing
+else. The GitHub Action stays in the repository the two used to share, renamed
+[`Tooark/action-security-scanner`](https://github.com/Tooark/action-security-scanner).
+**A remote include and a catalog mirror both have to point here** — see the
+first entry under _Changed_.
+
+### Added
+
+- `examples/quick-start.gitlab-ci.yml`, the one-line include, and a recipe in
+  the README and in `examples/remote-include.gitlab-ci.yml` for the case that
+  trips most first pipelines: scanning an image in the project's own, private
+  registry needs `TRIVY_USERNAME` and `TRIVY_PASSWORD` set from
+  `CI_REGISTRY_USER` and `CI_REGISTRY_PASSWORD`.
+- `tests/templates.test.py` runs the job each template generates, without
+  GitLab and without the scanner image. It renders the template with a set of
+  inputs, runs `before_script` and `script` against a stand-in `ark-tools`, and
+  asserts on the command line and the environment that stand-in received:
+  precedence, the arguments of each scan, `extra_args` splitting, the exit
+  code. CI runs it on every commit, and also lints the script blocks of the
+  templates with ShellCheck, which nothing did before.
+- `scripts/check-examples.py` checks every include of these templates, in
+  `examples/` and in the YAML blocks of the READMEs, the way GitLab would when
+  creating the pipeline: an undeclared input, a value of the wrong type or
+  outside `options`, or a missing required input fails CI here instead of in
+  the project of whoever copied the example.
+- `scripts/check-sync.sh` now also fails when an input is missing from either
+  README, and when the `scanner_version` row of a README or the current line
+  of `SUPPORTED-INTEGRATIONS.md` names an image tag other than the one in
+  `VERSION`. `scripts/validate-templates.py` now fails when a template
+  interpolates an input into `before_script`, `script` or `after_script`:
+  inputs reaching the shell only as environment variables was a rule on paper,
+  and is now a check.
+- `SUPPORTED-INTEGRATIONS.md` states the minimum GitLab version: 16.11 for a
+  remote include, because the templates use array-typed inputs and stage a
+  boolean input under `variables:`; 17.0 for a CI/CD Catalog component.
+- Contributing, Help and Security and Support sections at the end of both
+  READMEs.
+
+### Changed
+
+- **The templates are released from this repository.** Up to 1.2.0 they were
+  released together with the GitHub Action, from a repository then called
+  `Tooark/ci-security-scanner`; this one continues them from the same history
+  and the same tags. The templates themselves did not move inside the
+  repository. What a consumer has to change:
+  - a remote include now points at
+    `https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/<tag>/templates/<scan>.yml`.
+    One that still names `Tooark/ci-security-scanner` resolves only for as
+    long as GitHub redirects the old name, only for tags up to `v1.2.0`, and
+    gets no further releases;
+  - a catalog mirror must set `UPSTREAM_REPO` to
+    `Tooark/template-ci-security-scanner`, in its `.gitlab-ci.yml` or as a
+    project CI/CD variable. `catalog-mirror/README.md` has the steps. Component
+    paths on your instance do not change.
+- The catalog mirror moved from `examples/gitlab-catalog-mirror/` to
+  `catalog-mirror/`, and the example pipelines from `examples/gitlab/` to
+  `examples/`.
+- The README is written for GitLab only: every input with its default and the
+  templates that accept it, the report files each scan writes, the GitLab
+  version and executors required, and recipes. Every section heading carries
+  an icon, which changes the anchor of the section: it now starts with a
+  hyphen, `#-inputs` where it was `#inputs`.
+- `SUPPORTED-INTEGRATIONS.md`, `CONTRIBUTING.md`, `SECURITY.md`, `SUPPORT.md`
+  and the issue and pull request templates describe the templates only, and
+  send GitHub Actions questions to the sister repository.
+- The onboarding guide covers the templates only, at its own address,
+  <https://tooark.com/template-ci-security-scanner/>. It gained sections on how
+  a project consumes a template, the anatomy of one, the path of a run and the
+  catalog; it takes GitLab's orange as its accent colour; and it closes with a
+  card pointing at the sibling guide of the GitHub Action.
+
+### Removed
+
+- The GitHub Action — `action.yml` and `src/run-scanner.sh` — and the GitHub
+  example workflow. They live on in
+  [`Tooark/action-security-scanner`](https://github.com/Tooark/action-security-scanner).
+
+### Fixed
+
+- `full-scan` no longer overrides `FULL_SCAN_DOCKERFILES` and `FULL_SCAN_MODE`
+  set as CI/CD variables. The `dockerfiles` and `scan_mode` inputs defaulted to
+  `"Dockerfile"` and `"fs"` — the image's own defaults — and a non-empty
+  default is always forwarded, so a project that set either variable and left
+  the input alone had it silently replaced. Both inputs now default to empty,
+  like every other forwarding input, and `scan_mode` accepts `""`. A pipeline
+  that sets neither the input nor the variable behaves exactly as before. **A
+  project that does set `FULL_SCAN_DOCKERFILES` or `FULL_SCAN_MODE` as a
+  variable will see it take effect for the first time.**
+- The Trivy database cache is now saved when the job fails too. The five
+  templates that cache it declared no `cache:when`, and GitLab's default saves
+  a cache only on success — while these jobs fail by design whenever a gate
+  trips. A project with findings therefore never populated the cache and
+  downloaded the whole database on every run. The cache entry now sets
+  `when: always`, the counterpart of the separate save step the GitHub Action
+  has always had.
+
 ## [1.2.0] - 2026-09-27
 
 ### Added
@@ -195,7 +293,8 @@ a tag — this content first reached consumers as part of 1.1.0.
   socket mount, unredacted Betterleaks output, and Trivy's secret scanner
   writing findings into an uploaded artifact.
 
-[Unreleased]: https://github.com/Tooark/ci-security-scanner/compare/v1.2.0...HEAD
-[1.2.0]: https://github.com/Tooark/ci-security-scanner/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/Tooark/ci-security-scanner/releases/tag/v1.1.0
-[1.0.0]: https://github.com/Tooark/ci-security-scanner/commit/56263b1c4c085d5ce785ed263194c04609b8f0be
+[Unreleased]: https://github.com/Tooark/template-ci-security-scanner/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/Tooark/template-ci-security-scanner/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/Tooark/template-ci-security-scanner/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/Tooark/template-ci-security-scanner/releases/tag/v1.1.0
+[1.0.0]: https://github.com/Tooark/template-ci-security-scanner/commit/56263b1c4c085d5ce785ed263194c04609b8f0be

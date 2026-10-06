@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 # =============================================================================
-# Guards the invariants that keep the GitLab templates and the GitHub Action
-# interchangeable, and the documentation honest:
+# Guards the invariants that keep the templates and their documentation honest:
 #
-#   1. every artifact pins exactly the scanner image declared in VERSION;
-#   2. every ARK_IN_* an artifact sets is actually consumed downstream;
-#   3. every copy-paste reference in the docs pins COMPONENT_VERSION, every
+#   1. every template pins exactly the scanner image declared in VERSION;
+#   2. every ARK_IN_* a template sets is actually consumed downstream;
+#   3. every input a template declares is documented in both READMEs;
+#   4. every copy-paste reference in the docs pins COMPONENT_VERSION, every
 #      mention of the report envelope names REPORT_VERSION, and the onboarding
 #      guide takes all of its versions from VERSION.
 #
@@ -17,6 +17,12 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/.."
+
+# What a remote include points at, and the project the examples assume the
+# catalog mirror lives in. A rename of either is an edit here, and the checks
+# below then flag every reference that still carries the old name.
+TEMPLATE_REPO="Tooark/template-ci-security-scanner"
+CATALOG_PROJECT="tooark/ci-security-scanner"
 
 failures=0
 ok() { printf '  ok   %s\n' "$*"; }
@@ -69,28 +75,30 @@ for template in templates/*.yml; do
   expect_pin "$template scanner_version" "$(default_after "$template" scanner_version)" "$SCANNER_VERSION"
 done
 
-expect_pin "action.yml scanner-image" "$(default_after action.yml scanner-image)" "$SCANNER_IMAGE"
-expect_pin "action.yml scanner-version" "$(default_after action.yml scanner-version)" "$SCANNER_VERSION"
+# A literal backtick, spelled so that no quoting below ever has to escape one.
+tick="$(printf '\140')"
 
-# The runner script carries its own fallbacks for direct invocation.
-runner="$(cat src/run-scanner.sh)"
+# The default is also quoted where a reader looks it up: the scanner_version
+# row of each README, and the row of the support matrix marked Current.
+for readme in README.md README.pt-BR.md; do
+  row="$(grep -E "^\| ${tick}scanner_version${tick}" "$readme" || true)"
+  if [[ $row == *"${tick}${SCANNER_VERSION}${tick}"* ]]; then
+    ok "$readme scanner_version row"
+  else
+    fail "$readme does not give '$SCANNER_VERSION' as the default of scanner_version"
+  fi
+done
 
-if [[ $runner == *"ARK_SCANNER_IMAGE:-${SCANNER_IMAGE}}"* ]]; then
-  ok "src/run-scanner.sh scanner image fallback"
+current="$(grep -E '\| Current[[:space:]]*\|' SUPPORTED-INTEGRATIONS.md || true)"
+if [[ $current == *"${tick}${SCANNER_IMAGE}:${SCANNER_VERSION}${tick}"* ]]; then
+  ok "SUPPORTED-INTEGRATIONS.md current pairing"
 else
-  fail "src/run-scanner.sh scanner image fallback does not match '$SCANNER_IMAGE'"
-fi
-
-if [[ $runner == *"ARK_SCANNER_VERSION:-${SCANNER_VERSION}}"* ]]; then
-  ok "src/run-scanner.sh scanner version fallback"
-else
-  fail "src/run-scanner.sh scanner version fallback does not match '$SCANNER_VERSION'"
+  fail "SUPPORTED-INTEGRATIONS.md does not pair the Current line with ${SCANNER_IMAGE}:${SCANNER_VERSION}"
 fi
 
 # -----------------------------------------------------------------------------
-# Lists the bare variable names passed to a forwarding helper, following
-# backslash continuations. Used for both ark_apply_inputs (templates) and
-# add_env_from_input (runner script).
+# Lists the bare variable names passed to ark_apply_inputs, following backslash
+# continuations.
 # -----------------------------------------------------------------------------
 forwarded_names() {
   awk -v fn="$2" '
@@ -146,25 +154,40 @@ for template in templates/*.yml; do
 done
 
 echo
-echo "3. ARK_IN_* wiring between action.yml and src/run-scanner.sh"
+echo "3. inputs documented in the READMEs"
 
-action_ok=1
-runner_forwarded="$(forwarded_names src/run-scanner.sh add_env_from_input | sed 's/^/ARK_IN_/')"
+# The spec:inputs block of each template is the reference, but the README is
+# what people read first. An input missing from its tables does not exist as
+# far as they are concerned.
+#
+# The inputs of a template are the four-space keys between `spec:` and `---`.
+inputs="$(
+  for template in templates/*.yml; do
+    awk '
+      /^---/ { exit }
+      /^    [a-z][a-z0-9_]*:[ \t]*$/ {
+        sub(/:.*/, "")
+        gsub(/ /, "")
+        print
+      }
+    ' "$template"
+  done | sort -u
+)"
+[ -n "$inputs" ] || { echo "could not read any input from templates/" >&2; exit 1; }
 
-# Read rather than word-split: process substitution keeps the loop in this
-# shell, so action_ok survives it (a pipe would run the body in a subshell).
-while read -r name; do
-  # Either referenced verbatim, or forwarded as a bare name to add_env_from_input.
-  if [[ $runner == *"$name"* ]]; then
-    continue
-  fi
-  if has_line "$runner_forwarded" "$name"; then
-    continue
-  fi
-  fail "action.yml sets $name but src/run-scanner.sh never forwards it"
-  action_ok=0
-done < <(grep -oE 'ARK_IN_[A-Z0-9_]+' action.yml | sort -u)
-[ "$action_ok" -eq 1 ] && ok "action.yml -> src/run-scanner.sh"
+for readme in README.md README.pt-BR.md; do
+  content="$(cat "$readme")"
+  readme_ok=1
+  # Read rather than word-split: a here-string keeps the loop in this shell,
+  # so the flag survives it (a pipe would run the body in a subshell).
+  while read -r name; do
+    if [[ $content != *"${tick}${name}${tick}"* ]]; then
+      fail "$readme never mentions the input '$name'"
+      readme_ok=0
+    fi
+  done <<<"$inputs"
+  [ "$readme_ok" -eq 1 ] && ok "$readme"
+done
 
 echo
 echo "4. versions quoted in the documentation"
@@ -194,22 +217,21 @@ checked_copy() {
   fi
 }
 
-# Only the three forms a reader copies into their own pipeline. Prose that
-# explains the tagging scheme -- "v1.0.0 is never moved", the table of floating
-# tags -- is illustrative and deliberately not matched.
-VERSION_REF_RE='ci-security-scanner@v[0-9]+\.[0-9]+\.[0-9]+'
-VERSION_REF_RE="$VERSION_REF_RE|ci-security-scanner/v[0-9]+\.[0-9]+\.[0-9]+/"
-VERSION_REF_RE="$VERSION_REF_RE|ci-security-scanner/[a-z-]+@[0-9]+\.[0-9]+\.[0-9]+"
+# Only the two forms a reader copies into their own pipeline: the URL of a
+# remote include, which carries the tag, and a catalog component, which carries
+# the bare version. Prose that explains the tagging scheme -- "v1.0.0 is never
+# moved", the table of floating tags -- is illustrative and deliberately not
+# matched.
+VERSION_REF_RE="${TEMPLATE_REPO}/v[0-9]+\.[0-9]+\.[0-9]+/"
+VERSION_REF_RE="$VERSION_REF_RE|${CATALOG_PROJECT}/[a-z-]+@[0-9]+\.[0-9]+\.[0-9]+"
 
 version_ref_files=(
   README.md
   README.pt-BR.md
   SUPPORTED-INTEGRATIONS.md
   docs/index.html
-  examples/github/security-scan.yml
-  examples/gitlab/catalog-component.gitlab-ci.yml
-  examples/gitlab/remote-include.gitlab-ci.yml
-  examples/gitlab-catalog-mirror/README.md
+  examples/*.yml
+  catalog-mirror/README.md
 )
 
 for file in "${version_ref_files[@]}"; do
@@ -242,7 +264,7 @@ done
 # The envelope version is what a collector behind report_url validates against,
 # so a stale one in the docs sends people to the wrong schema. CHANGELOG.md is
 # history and deliberately not matched.
-REPORT_REF_RE="${REPORT_SCHEMA}\`? (envelope )?v[0-9]+(\.[0-9]+)*"
+REPORT_REF_RE="${REPORT_SCHEMA}${tick}? (envelope )?v[0-9]+(\.[0-9]+)*"
 
 report_ref_files=(
   README.md

@@ -1,17 +1,17 @@
 # =============================================================================
-# ci-security-scanner :: GitHub Pages
+# template-ci-security-scanner :: GitHub Pages
 # -----------------------------------------------------------------------------
 # Publishes docs/ as the onboarding guide at
-# https://tooark.com/ci-security-scanner/, after scripts/render-docs.sh has
-# filled its version placeholders in from VERSION. That is why a change to
-# VERSION alone redeploys the site.
+# https://tooark.com/template-ci-security-scanner/, after
+# scripts/render-docs.sh has filled its version placeholders in from VERSION.
+# That is why a change to VERSION alone redeploys the site.
 #
 # The artifact-based deployment needs Pages switched to the "GitHub Actions"
-# source once, under Settings > Pages. The API cannot set it, so the first run
-# fails with "Pages site not found" until someone does.
+# source once, under Settings > Pages. Until someone does, every run fails with
+# "Pages site not found".
 #
-# Nothing here touches the templates or the Action; a documentation change must
-# never be able to hold up a release.
+# Nothing here touches the templates; a documentation change must never be able
+# to hold up a release.
 # =============================================================================
 name: Pages
 

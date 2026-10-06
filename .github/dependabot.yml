@@ -1,11 +1,11 @@
-# Keeps the actions referenced by the workflows and by action.yml current.
-# Without this, pinning a digest would quietly freeze a dependency instead of
-# controlling it.
+# Keeps the actions referenced by this repository's own workflows current,
+# including the sister Action the self-scan job runs. Without this, pinning a
+# version would quietly freeze a dependency instead of controlling it.
 version: 2
 
 updates:
   - package-ecosystem: github-actions
-    # "/" covers .github/workflows/ and the composite action.yml at the root.
+    # "/" covers .github/workflows/.
     directory: "/"
     schedule:
       interval: weekly

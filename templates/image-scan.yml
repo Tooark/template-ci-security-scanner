@@ -9,7 +9,7 @@
 # Private registries: set TRIVY_USERNAME / TRIVY_PASSWORD as masked CI/CD
 # variables; Trivy reads them natively.
 #
-# Docs: https://github.com/Tooark/ci-security-scanner
+# Docs: https://github.com/Tooark/template-ci-security-scanner
 # =============================================================================
 spec:
   inputs:
@@ -126,6 +126,10 @@ spec:
     - key: "ark-trivy-db"
       paths:
         - .cache/trivy
+      # A tripped gate fails the job by design, and GitLab saves the cache of a
+      # failed job only when told to. Without this, a project with findings
+      # would download the whole database on every run.
+      when: always
   variables:
     TRIVY_CACHE_DIR: "$CI_PROJECT_DIR/.cache/trivy"
     REPORT_DIR: "$CI_PROJECT_DIR/$[[ inputs.reports_dir ]]"

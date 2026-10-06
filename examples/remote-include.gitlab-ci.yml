@@ -1,5 +1,6 @@
 # =============================================================================
-# Consuming ci-security-scanner from GitHub, with `include: remote:`.
+# A complete setup with `include: remote:`: build the image, scan everything on
+# the default branch, and give merge requests a fast secrets-only job.
 # -----------------------------------------------------------------------------
 # Works on gitlab.com and on any self-hosted instance that can reach
 # raw.githubusercontent.com. No catalog needed.
@@ -27,7 +28,7 @@ include:
   # ---------------------------------------------------------------------------
   # Everything at once: image + source + secrets + Dockerfile lint.
   # ---------------------------------------------------------------------------
-  - remote: "https://raw.githubusercontent.com/Tooark/ci-security-scanner/v1.2.0/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/full-scan.yml"
     inputs:
       stage: security
       image: "$CI_REGISTRY_IMAGE:$CI_COMMIT_SHORT_SHA"
@@ -35,12 +36,15 @@ include:
       trivy_severity_fail: "CRITICAL"
       hadolint_failure_level: "warning"
       dockerfiles: "Dockerfile,docker/Dockerfile.worker"
+      # sbom is a boolean input, so it takes a bare true; the string-typed
+      # toggles, such as no_git below, take a quoted "true".
       sbom: true
 
   # ---------------------------------------------------------------------------
   # A second, faster job that runs on merge requests only: secrets, no image.
+  # A different job_name is what lets a template be included more than once.
   # ---------------------------------------------------------------------------
-  - remote: "https://raw.githubusercontent.com/Tooark/ci-security-scanner/v1.2.0/templates/secret-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/secret-scan.yml"
     inputs:
       job_name: "security:secrets-mr"
       stage: security
@@ -55,6 +59,11 @@ include:
 "security:full-scan":
   needs: ["build"]
   variables:
+    # The image sits in this project's registry, which is private unless the
+    # project is public. Trivy reads both variables natively, and the job token
+    # behind CI_REGISTRY_PASSWORD is allowed to pull.
+    TRIVY_USERNAME: "$CI_REGISTRY_USER"
+    TRIVY_PASSWORD: "$CI_REGISTRY_PASSWORD"
     # Any environment variable from the image README works here. Inputs win
     # over these, so leave the matching input empty when you set one.
     TRIVY_SCANNERS: "vuln,secret,misconfig,license"

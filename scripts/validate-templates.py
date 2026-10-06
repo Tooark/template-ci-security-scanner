@@ -9,7 +9,10 @@ that catch real breakage:
   * every ``$[[ inputs.x ]]`` reference resolves to a declared input;
   * every declared input is actually referenced (dead inputs are a doc lie);
   * a declared ``default`` is one of the declared ``options``;
-  * the template defines exactly one job.
+  * the template defines exactly one job;
+  * no input is interpolated into a script block: there it would be shell
+    text, and a crafted value a command. Inputs reach the script through
+    ``variables:`` only.
 
 Usage: python3 scripts/validate-templates.py [templates/*.yml]
 """
@@ -29,6 +32,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 INPUT_REF = re.compile(r"\$\[\[\s*inputs\.([A-Za-z0-9_]+)\s*\]\]")
 VALID_INPUT_KEYS = {"default", "description", "type", "options", "regex"}
 VALID_INPUT_TYPES = {"string", "number", "boolean", "array"}
+SCRIPT_SECTIONS = ("before_script", "script", "after_script")
 
 
 class TemplateError(Exception):
@@ -81,10 +85,20 @@ def check_inputs_declared(spec_text: str) -> dict[str, dict]:
 
 
 def check_config(config_text: str) -> None:
-  """Parses the config half and asserts it defines a single job."""
+  """Parses the config half and asserts it defines a single, safe job."""
   config_doc = yaml.safe_load(config_text)
   if not isinstance(config_doc, dict) or len(config_doc) != 1:
     raise TemplateError("the second document must define exactly one job")
+
+  (job,) = config_doc.values()
+  for section in SCRIPT_SECTIONS:
+    for line in job.get(section) or []:
+      spliced = INPUT_REF.search(str(line))
+      if spliced:
+        raise TemplateError(
+            f"{section} interpolates input '{spliced.group(1)}' as shell text; "
+            f"stage it under variables: as ARK_IN_* instead"
+        )
 
 
 def validate(path: Path) -> list[str]:
