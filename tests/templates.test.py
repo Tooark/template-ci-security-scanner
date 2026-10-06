@@ -279,9 +279,11 @@ def run_case(case: dict, components: dict, bash: str, stub_dir: Path, workdir: P
     if actual != expected:
       problems.append(f"ark-tools saw {name}={actual!r}, expected {expected!r}")
 
+  # The message names the case field, never the value: a failure here must not
+  # itself print what the job was supposed to keep out of its log.
   secret = case.get("log_excludes")
   if secret and secret in result.stdout + result.stderr:
-    problems.append(f"the job log printed {secret!r}")
+    problems.append("the job log printed the log_excludes value")
 
   return problems
 
