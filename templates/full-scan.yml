@@ -8,7 +8,7 @@
 # Precedence for every tunable: input > CI/CD variable > image default.
 # Leave an input empty to keep whatever the project already sets as a variable.
 #
-# Docs: https://github.com/Tooark/template-ci-security-scanner
+# Docs: https://github.com/Tooark/template-security-scanner
 # =============================================================================
 spec:
   inputs:

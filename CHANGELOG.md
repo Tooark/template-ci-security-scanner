@@ -54,12 +54,12 @@ first entry under _Changed_.
   and the same tags. The templates themselves did not move inside the
   repository. What a consumer has to change:
   - a remote include now points at
-    `https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/<tag>/templates/<scan>.yml`.
+    `https://raw.githubusercontent.com/Tooark/template-security-scanner/<tag>/templates/<scan>.yml`.
     One that still names `Tooark/ci-security-scanner` resolves only for as
     long as GitHub redirects the old name, only for tags up to `v1.2.0`, and
     gets no further releases;
   - a catalog mirror must set `UPSTREAM_REPO` to
-    `Tooark/template-ci-security-scanner`, in its `.gitlab-ci.yml` or as a
+    `Tooark/template-security-scanner`, in its `.gitlab-ci.yml` or as a
     project CI/CD variable. `catalog-mirror/README.md` has the steps. Component
     paths on your instance do not change.
 - The catalog mirror moved from `examples/gitlab-catalog-mirror/` to
@@ -74,7 +74,7 @@ first entry under _Changed_.
   and the issue and pull request templates describe the templates only, and
   send GitHub Actions questions to the sister repository.
 - The onboarding guide covers the templates only, at its own address,
-  <https://tooark.com/template-ci-security-scanner/>. It gained sections on how
+  <https://tooark.com/template-security-scanner/>. It gained sections on how
   a project consumes a template, the anatomy of one, the path of a run and the
   catalog; it takes GitLab's orange as its accent colour; and it closes with a
   card pointing at the sibling guide of the GitHub Action.
@@ -293,8 +293,8 @@ a tag — this content first reached consumers as part of 1.1.0.
   socket mount, unredacted Betterleaks output, and Trivy's secret scanner
   writing findings into an uploaded artifact.
 
-[Unreleased]: https://github.com/Tooark/template-ci-security-scanner/compare/v1.3.0...HEAD
-[1.3.0]: https://github.com/Tooark/template-ci-security-scanner/compare/v1.2.0...v1.3.0
-[1.2.0]: https://github.com/Tooark/template-ci-security-scanner/compare/v1.1.0...v1.2.0
-[1.1.0]: https://github.com/Tooark/template-ci-security-scanner/releases/tag/v1.1.0
-[1.0.0]: https://github.com/Tooark/template-ci-security-scanner/commit/56263b1c4c085d5ce785ed263194c04609b8f0be
+[Unreleased]: https://github.com/Tooark/template-security-scanner/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/Tooark/template-security-scanner/compare/v1.2.0...v1.3.0
+[1.2.0]: https://github.com/Tooark/template-security-scanner/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/Tooark/template-security-scanner/releases/tag/v1.1.0
+[1.0.0]: https://github.com/Tooark/template-security-scanner/commit/56263b1c4c085d5ce785ed263194c04609b8f0be

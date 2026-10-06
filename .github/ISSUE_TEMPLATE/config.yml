@@ -3,10 +3,10 @@
 blank_issues_enabled: true
 contact_links:
   - name: 🔒 Report a security vulnerability
-    url: https://github.com/Tooark/template-ci-security-scanner/security/advisories/new
+    url: https://github.com/Tooark/template-security-scanner/security/advisories/new
     about: Please use private security advisories, not public issues.
   - name: 📘 Onboarding guide
-    url: https://tooark.com/template-ci-security-scanner/
+    url: https://tooark.com/template-security-scanner/
     about: What each file does and why — read this before filing a usage question.
   - name: 🐙 Using GitHub Actions?
     url: https://github.com/Tooark/action-security-scanner/issues/new/choose

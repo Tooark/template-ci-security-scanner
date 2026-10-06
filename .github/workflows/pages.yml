@@ -1,8 +1,8 @@
 # =============================================================================
-# template-ci-security-scanner :: GitHub Pages
+# template-security-scanner :: GitHub Pages
 # -----------------------------------------------------------------------------
 # Publishes docs/ as the onboarding guide at
-# https://tooark.com/template-ci-security-scanner/, after
+# https://tooark.com/template-security-scanner/, after
 # scripts/render-docs.sh has filled its version placeholders in from VERSION.
 # That is why a change to VERSION alone redeploys the site.
 #

@@ -1,5 +1,5 @@
 # ==============================================================================
-# Tooark template-ci-security-scanner — CODEOWNERS
+# Tooark template-security-scanner — CODEOWNERS
 # ==============================================================================
 # GitHub uses this file to auto-request reviews from the right owner.
 # Rules are matched top-to-bottom; the LAST matching rule wins per file.

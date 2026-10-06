@@ -1,6 +1,6 @@
 # Support
 
-Thanks for your interest in **Tooark template-ci-security-scanner**! 💙
+Thanks for your interest in **Tooark template-security-scanner**! 💙
 
 This document explains where to get help based on what you're trying to do.
 
@@ -8,14 +8,14 @@ This document explains where to get help based on what you're trying to do.
 
 ## 🤔 I have a question
 
-**Read the onboarding guide first:** <https://tooark.com/template-ci-security-scanner/>
+**Read the onboarding guide first:** <https://tooark.com/template-security-scanner/>
 
 It walks the repository file by file — what each artifact does, how an input
 travels from the include to the scanner, and the reasoning behind the
 decisions that look odd on a first read.
 
 Still stuck? **Open an issue:**
-<https://github.com/Tooark/template-ci-security-scanner/issues/new/choose>
+<https://github.com/Tooark/template-security-scanner/issues/new/choose>
 
 Please **search existing issues** first. The authoritative reference for any
 input is the `spec:inputs` block of the matching template in
@@ -30,7 +30,7 @@ Using GitHub Actions? Questions about the Action go to
 ## 🐛 I found a bug
 
 **Open an issue using the "Bug report" template:**
-<https://github.com/Tooark/template-ci-security-scanner/issues/new/choose>
+<https://github.com/Tooark/template-security-scanner/issues/new/choose>
 
 Please include:
 
@@ -68,7 +68,7 @@ Rule of thumb:
 ## ✨ I have an improvement idea
 
 **Open an issue using the "Feature request" template:**
-<https://github.com/Tooark/template-ci-security-scanner/issues/new/choose>
+<https://github.com/Tooark/template-security-scanner/issues/new/choose>
 
 Explain the **problem** you are trying to solve, not just the solution. Note
 that a generated GitLab job is an ordinary job — much of what people ask for
@@ -81,7 +81,7 @@ variable.
 
 **Do NOT open a public issue.** Use one of these private channels:
 
-- **Preferred**: [GitHub Security Advisories](https://github.com/Tooark/template-ci-security-scanner/security/advisories/new)
+- **Preferred**: [GitHub Security Advisories](https://github.com/Tooark/template-security-scanner/security/advisories/new)
 - **Email**: `security@tooark.com` _(PGP key available on request)_
 
 Full policy and response targets are in [`SECURITY.md`](SECURITY.md).
@@ -92,7 +92,7 @@ Full policy and response targets are in [`SECURITY.md`](SECURITY.md).
 
 | Audience                 | Start here                                                                          |
 | ------------------------ | ----------------------------------------------------------------------------------- |
-| **New to CI pipelines**  | [Onboarding guide](https://tooark.com/template-ci-security-scanner/)                |
+| **New to CI pipelines**  | [Onboarding guide](https://tooark.com/template-security-scanner/)                |
 | **Users**                | [README.md](README.md) · [README.pt-BR.md](README.pt-BR.md)                         |
 | **Every input**          | The `spec:inputs` block of each file in [`templates/`](templates/)                  |
 | **Support boundaries**   | [SUPPORTED-INTEGRATIONS.md](SUPPORTED-INTEGRATIONS.md)                              |

@@ -2,7 +2,7 @@
 
 ## Reporting a vulnerability
 
-The Tooark template-ci-security-scanner maintainers take security seriously —
+The Tooark template-security-scanner maintainers take security seriously —
 these templates run inside CI/CD pipelines that hold registry credentials and
 report webhooks. If you believe you have found a security vulnerability in the
 GitLab templates, the validation scripts, the release workflow or the CI/CD
@@ -20,7 +20,7 @@ report a vulnerability in it there.
 Instead, use one of the following channels:
 
 1. **Preferred** — GitHub Security Advisories:
-   [Report a vulnerability](https://github.com/Tooark/template-ci-security-scanner/security/advisories/new)
+   [Report a vulnerability](https://github.com/Tooark/template-security-scanner/security/advisories/new)
 2. **Email** — `security@tooark.com` (PGP key available on request)
 
 Please include:

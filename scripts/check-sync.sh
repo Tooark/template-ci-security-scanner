@@ -21,7 +21,7 @@ cd "$(dirname "$0")/.."
 # What a remote include points at, and the project the examples assume the
 # catalog mirror lives in. A rename of either is an edit here, and the checks
 # below then flag every reference that still carries the old name.
-TEMPLATE_REPO="Tooark/template-ci-security-scanner"
+TEMPLATE_REPO="Tooark/template-security-scanner"
 CATALOG_PROJECT="tooark/ci-security-scanner"
 
 failures=0

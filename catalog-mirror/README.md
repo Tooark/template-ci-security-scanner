@@ -4,7 +4,7 @@ GitLab only lists components that live in a project on the GitLab instance
 itself, so a GitHub repository cannot be published to the catalog directly.
 This directory holds the pipeline for a small mirror project that closes that
 gap: it watches releases of
-[`Tooark/template-ci-security-scanner`](https://github.com/Tooark/template-ci-security-scanner),
+[`Tooark/template-security-scanner`](https://github.com/Tooark/template-security-scanner),
 copies `templates/` across when the version moves, and publishes the new
 version to the internal catalog.
 
@@ -35,7 +35,7 @@ and later. On an older instance, switch its image to
    ```bash
    git clone https://gitlab.example.com/tooark/ci-security-scanner.git
    cd ci-security-scanner
-   curl -fsSLO https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/main/catalog-mirror/.gitlab-ci.yml
+   curl -fsSLO https://raw.githubusercontent.com/Tooark/template-security-scanner/main/catalog-mirror/.gitlab-ci.yml
    git add .gitlab-ci.yml
    git commit -m "chore: add catalog sync pipeline"
    git push
@@ -104,7 +104,7 @@ Point it here instead. Either edit `UPSTREAM_REPO` in the mirror's
 
 ```yaml
 variables:
-  UPSTREAM_REPO: "Tooark/template-ci-security-scanner"
+  UPSTREAM_REPO: "Tooark/template-security-scanner"
 ```
 
 or leave the file alone and add `UPSTREAM_REPO` with that value under

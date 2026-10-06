@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Thanks for taking the time to file a bug report! Please fill out the sections below.
-        For **security vulnerabilities**, do NOT file a public issue — see [`SECURITY.md`](https://github.com/Tooark/template-ci-security-scanner/blob/main/SECURITY.md).
+        For **security vulnerabilities**, do NOT file a public issue — see [`SECURITY.md`](https://github.com/Tooark/template-security-scanner/blob/main/SECURITY.md).
         Using **GitHub Actions**? The Action lives in [`Tooark/action-security-scanner`](https://github.com/Tooark/action-security-scanner/issues/new/choose).
 
   - type: checkboxes

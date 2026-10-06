@@ -15,7 +15,7 @@ filled in; the `bug` template asks for exactly the fields this page indexes.
 
 | Platform                               | How it is consumed                                                                                                       | Status            |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------- |
-| **GitLab CI — remote include**         | `include: - remote: "https://raw.githubusercontent.com/Tooark/template-ci-security-scanner/v1.3.0/templates/<scan>.yml"` | ✅ Supported      |
+| **GitLab CI — remote include**         | `include: - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/<scan>.yml"` | ✅ Supported      |
 | **GitLab CI — CI/CD Catalog**          | `include: - component: $CI_SERVER_FQDN/tooark/ci-security-scanner/<scan>@1.3.0`                                          | ✅ Supported      |
 | **GitLab CI — local copy**             | The files of `templates/` vendored into a project, `include: - local:`                                                   | ⚠️ Best effort    |
 | **GitHub Actions**                     | [`Tooark/action-security-scanner`](https://github.com/Tooark/action-security-scanner)                                    | ➡️ Sister project |
