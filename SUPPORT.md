@@ -92,7 +92,7 @@ Full policy and response targets are in [`SECURITY.md`](SECURITY.md).
 
 | Audience                 | Start here                                                                          |
 | ------------------------ | ----------------------------------------------------------------------------------- |
-| **New to CI pipelines**  | [Onboarding guide](https://tooark.com/template-security-scanner/)                |
+| **New to CI pipelines**  | [Onboarding guide](https://tooark.com/template-security-scanner/)                   |
 | **Users**                | [README.md](README.md) · [README.pt-BR.md](README.pt-BR.md)                         |
 | **Every input**          | The `spec:inputs` block of each file in [`templates/`](templates/)                  |
 | **Support boundaries**   | [SUPPORTED-INTEGRATIONS.md](SUPPORTED-INTEGRATIONS.md)                              |

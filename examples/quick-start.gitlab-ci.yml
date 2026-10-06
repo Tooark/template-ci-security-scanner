@@ -16,4 +16,4 @@
 # =============================================================================
 include:
   # Always pin a tag.
-  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.0/templates/full-scan.yml"
+  - remote: "https://raw.githubusercontent.com/Tooark/template-security-scanner/v1.3.1/templates/full-scan.yml"
